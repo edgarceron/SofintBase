@@ -92,7 +92,7 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=sofintcorporativa',
+			'connectionString' => 'mysql:host=localhost;dbname=sofintbase',
 			'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => '',

@@ -1,21 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "opciones".
+ * This is the model class for table "recuperar".
  *
- * The followings are the available columns in table 'opciones':
+ * The followings are the available columns in table 'recuperar':
  * @property integer $id
- * @property string $opcion
- * @property string $valor
+ * @property string $url
+ * @property integer $estado
+ * @property integer $id_usuario
+ *
+ * The followings are the available model relations:
+ * @property SofintUsers $idUsuario
  */
-class Opciones extends CActiveRecord
+class Recuperar extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'opciones';
+		return 'recuperar';
 	}
 
 	/**
@@ -26,11 +30,12 @@ class Opciones extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('opcion, valor', 'required'),
-			array('opcion, valor', 'length', 'max'=>32),
+			array('url, estado, id_usuario', 'required'),
+			array('estado, id_usuario', 'numerical', 'integerOnly'=>true),
+			array('url', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, opcion, valor', 'safe', 'on'=>'search'),
+			array('id, url, estado, id_usuario', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -42,6 +47,7 @@ class Opciones extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'idUsuario' => array(self::BELONGS_TO, 'SofintUsers', 'id_usuario'),
 		);
 	}
 
@@ -52,8 +58,9 @@ class Opciones extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'opcion' => 'Opcion',
-			'valor' => 'Valor',
+			'url' => 'Url',
+			'estado' => 'Estado',
+			'id_usuario' => 'Id Usuario',
 		);
 	}
 
@@ -76,8 +83,9 @@ class Opciones extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('opcion',$this->opcion,true);
-		$criteria->compare('valor',$this->valor,true);
+		$criteria->compare('url',$this->url,true);
+		$criteria->compare('estado',$this->estado);
+		$criteria->compare('id_usuario',$this->id_usuario);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -88,7 +96,7 @@ class Opciones extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Opciones the static model class
+	 * @return Recuperar the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
